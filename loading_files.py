@@ -28,12 +28,20 @@ def loading_web(url):
     
 
 
-urlvideo = "y15070biffg"
+def _youtube_id_from_url(url_or_id: str) -> str:
+    """Extract video ID from YouTube URL or return as-is if already an ID."""
+    s = (url_or_id or "").strip()
+    if "youtube.com/watch?v=" in s:
+        return s.split("v=", 1)[1].split("&", 1)[0]
+    if "youtu.be/" in s:
+        return s.split("youtu.be/", 1)[1].split("?", 1)[0]
+    return s
 
-def loading_youtube(urlvideo):
 
+def loading_youtube(url_or_id: str):
+    video_id = _youtube_id_from_url(url_or_id)
     try:
-        transcript_list = YouTubeTranscriptApi.list_transcripts(urlvideo)
+        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
         # Prioriza português: primeiro pt-BR, depois pt
         idiomas_preferidos = ['pt-BR', 'pt']
         documento_encontrado = False
@@ -51,7 +59,7 @@ def loading_youtube(urlvideo):
                 break
     except Exception as e:
         print(f"Erro ao carregar transcrição do YouTube: {e}")
-        print(f"Video ID: {urlvideo}")
+        print(f"Video ID: {video_id}")
         print("Possíveis causas: vídeo sem transcrição disponível, transcrição bloqueada ou erro na API.")
 
 
@@ -73,11 +81,10 @@ def loading_pdf(file_path):
     documento = '\n\n'.join([doc.page_content for doc in documents_list])
     return documento
 
-# def loading_docx(file_path):
-#     loader = Docx2txtLoader(file_path)
-#     documents_list = loader.load()
-#     documento = '\n\n'.join([doc.page_content for doc in documents_list])
-#     return documento
+def loading_docx(file_path: str) -> str:
+    loader = Docx2txtLoader(file_path)
+    documents_list = loader.load()
+    return "\n\n".join(doc.page_content for doc in documents_list)
 
 # def loading_xlsx(file_path):
 #     loader = Xlsx2txtLoader(file_path)
