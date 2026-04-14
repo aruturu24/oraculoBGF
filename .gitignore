@@ -119,8 +119,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Streamlit
-.streamlit/
+# Streamlit (ignore all, keep shared theme config)
+.streamlit/*
+!.streamlit/config.toml
+.streamlit/secrets.toml
 
 # IDE
 .vscode/
@@ -143,6 +145,9 @@ tmp/
 .env
 *.key
 *.pem
+
+# SQLite auth database
+users.db
 
 # Large data files (optional - uncomment if you want to ignore)
 # files/
