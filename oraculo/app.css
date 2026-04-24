@@ -1,0 +1,505 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.93); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-16px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-6px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+    50%       { opacity: 0.75; box-shadow: 0 0 0 4px rgba(52, 211, 153, 0); }
+}
+
+@keyframes goldShimmer {
+    0%   { box-shadow: 0 0 0 0 rgba(212,160,23,0); }
+    50%  { box-shadow: 0 0 8px 2px rgba(212,160,23,0.35); }
+    100% { box-shadow: 0 0 0 0 rgba(212,160,23,0); }
+}
+
+@keyframes headerGlow {
+    0%, 100% { box-shadow: 0 2px 8px rgba(0,44,151,0.07); }
+    50%       { box-shadow: 0 4px 20px rgba(212,160,23,0.12), 0 2px 8px rgba(0,44,151,0.07); }
+}
+
+@keyframes typingDot {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40%           { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes borderPulse {
+    0%, 100% { border-color: #D4A017; }
+    50%       { border-color: rgba(212,160,23,0.45); }
+}
+
+@keyframes sidebarShimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+html, body, [class*="css"] {
+    font-family: "Inter", sans-serif;
+}
+
+[data-testid="stAppViewContainer"] > .main {
+    background: #F4F6FB;
+}
+[data-testid="stMain"] {
+    background: #F4F6FB;
+}
+
+/* ── Sidebar ────────────────────────────────────────────────── */
+[data-testid="stSidebar"] {
+    background: linear-gradient(160deg, #002c97 0%, #001f6b 100%);
+    border-right: none;
+    animation: fadeInLeft 0.4s ease both;
+    overflow: hidden !important;
+}
+
+/* Scrollable area lives inside, not on the sidebar root */
+[data-testid="stSidebar"] > div:first-child {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Collapsed state: kill all overflow so no scrollbar leaks out */
+[data-testid="stSidebar"][aria-expanded="false"] {
+    overflow: hidden !important;
+}
+[data-testid="stSidebar"][aria-expanded="false"] > div:first-child {
+    overflow: hidden !important;
+}
+
+/* Collapse / expand toggle always on top */
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapseButton"] {
+    z-index: 999999 !important;
+    position: relative !important;
+}
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] *,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+    color: #FFFFFF !important;
+}
+[data-testid="stSidebar"] hr {
+    border-color: rgba(255,255,255,0.10) !important;
+}
+[data-testid="stSidebar"] .stButton button {
+    transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+[data-testid="stSidebar"] .stButton button:hover {
+    transform: translateX(3px);
+}
+[data-testid="stSidebar"] .stButton button:active {
+    transform: translateX(0);
+}
+[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"] {
+    background: rgba(255,255,255,0.07) !important;
+    color: rgba(255,255,255,0.82) !important;
+    border-color: rgba(255,255,255,0.12) !important;
+    border-radius: 8px !important;
+}
+[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"]:hover {
+    background: rgba(255,255,255,0.13) !important;
+    color: #FFFFFF !important;
+}
+[data-testid="stSidebar"] [data-testid="stBaseButton-primary"] {
+    background: rgba(212,160,23,0.16) !important;
+    color: #D4A017 !important;
+    border-color: rgba(212,160,23,0.40) !important;
+    border-radius: 8px !important;
+}
+[data-testid="stSidebar"] [data-testid="stBaseButton-primary"]:hover {
+    background: rgba(212,160,23,0.26) !important;
+    color: #D4A017 !important;
+    box-shadow: 0 0 10px rgba(212,160,23,0.20) !important;
+}
+
+/* ── Chat header ────────────────────────────────────────────── */
+.bgf-header {
+    background: #FFFFFF;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-left: 4px solid #D4A017;
+    box-shadow: 0 2px 8px rgba(0,44,151,0.07);
+    animation: fadeInUp 0.35s ease both, headerGlow 4s ease-in-out 1s infinite;
+    transition: box-shadow 0.3s ease;
+}
+.bgf-header img {
+    height: 40px;
+    animation: scaleIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    animation-delay: 0.1s;
+}
+.bgf-header-text h1 {
+    color: #002c97 !important;
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    animation: fadeInLeft 0.35s ease both;
+    animation-delay: 0.12s;
+}
+.bgf-header-text p {
+    color: #8A93A8 !important;
+    margin: 0.1rem 0 0 0;
+    font-size: 0.78rem;
+    animation: fadeInLeft 0.35s ease both;
+    animation-delay: 0.18s;
+}
+
+/* ── Chat messages ──────────────────────────────────────────── */
+[data-testid="stChatMessage"] {
+    background: #FFFFFF;
+    border: 1px solid #E4E8F0;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 4px rgba(0,44,151,0.04);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+[data-testid="stChatMessage"]:hover {
+    box-shadow: 0 4px 16px rgba(0,44,151,0.09);
+    transform: translateY(-1px);
+}
+
+/* Human messages: slide from right, blue left accent */
+[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
+    border-left: 3px solid #002c97;
+    animation: slideInRight 0.3s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+/* AI messages: slide from left, gold left accent */
+[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
+    border-left: 3px solid #D4A017;
+    animation: slideInLeft 0.3s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+/* ── Chat input ─────────────────────────────────────────────── */
+[data-testid="stChatInput"] {
+    background: #FFFFFF !important;
+    border-radius: 12px !important;
+    border: 1.5px solid #D8DCE8 !important;
+    box-shadow: 0 2px 8px rgba(0,44,151,0.06) !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+[data-testid="stChatInput"]:focus-within {
+    border-color: #D4A017 !important;
+    box-shadow: 0 0 0 3px rgba(212,160,23,0.12), 0 2px 8px rgba(0,44,151,0.06) !important;
+    animation: borderPulse 2s ease-in-out infinite;
+}
+[data-testid="stChatInput"] textarea {
+    border: none !important;
+    background: transparent !important;
+    font-family: "Inter", sans-serif !important;
+    font-size: 0.92rem !important;
+    padding: 0.75rem 1rem !important;
+    box-shadow: none !important;
+}
+[data-testid="stChatInput"] button {
+    transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+[data-testid="stChatInput"] button:hover {
+    transform: scale(1.15) !important;
+}
+
+/* ── Chat bar attachment button ─────────────────────────────── */
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) {
+    align-items: flex-end !important;
+    gap: 0.4rem !important;
+    width: 100% !important;
+    margin-top: 0.3rem !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) > [data-testid="column"]:first-child {
+    flex: 0 0 2.85rem !important;
+    width: 2.85rem !important;
+    min-width: 2.85rem !important;
+    max-width: 2.85rem !important;
+    padding: 0 0 0.2rem 0 !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) > [data-testid="column"]:nth-child(2) {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stWidgetLabel"] {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] {
+    margin-bottom: 0 !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] > section {
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] section[data-testid="stFileUploaderDropzone"],
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] > section:first-of-type {
+    border: 1.5px solid #D8DCE8 !important;
+    border-radius: 50% !important;
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    min-height: 2.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 6px rgba(0,44,151,0.06) !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.18s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] section[data-testid="stFileUploaderDropzone"]:hover,
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] section[data-testid="stFileUploaderDropzone"]:focus-within {
+    border-color: #D4A017 !important;
+    box-shadow: 0 0 0 3px rgba(212,160,23,0.14) !important;
+    transform: scale(1.08) !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] p,
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] span,
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] small,
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] [data-testid="stCaption"],
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] [data-testid="stMarkdownContainer"],
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] .uploadedFileData,
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"] {
+    display: none !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] button {
+    font-size: 0 !important;
+    width: 100% !important;
+    height: 2.75rem !important;
+    min-height: 2.75rem !important;
+    border-radius: 50% !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: transparent !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] button::after {
+    content: "+" !important;
+    font-size: 1.5rem !important;
+    font-weight: 300 !important;
+    color: #002c97 !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"] .uploadedFile {
+    display: none !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"]:has(.uploadedFile) section[data-testid="stFileUploaderDropzone"],
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"]:has(.uploadedFile) > section:first-of-type {
+    border-color: #D4A017 !important;
+    background: rgba(212,160,23,0.07) !important;
+    animation: goldShimmer 2s ease-in-out infinite !important;
+}
+[data-testid="stHorizontalBlock"]:has([data-testid="stChatInput"]) [data-testid="column"]:first-child [data-testid="stFileUploader"]:has(.uploadedFile) button::after {
+    content: "\2713" !important;
+    font-size: 1.1rem !important;
+    color: #D4A017 !important;
+}
+
+/* ── Sidebar logo ───────────────────────────────────────────── */
+.sidebar-logo {
+    text-align: center;
+    padding: 0.6rem 0 0.7rem 0;
+    animation: scaleIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    animation-delay: 0.05s;
+}
+.sidebar-logo-bg {
+    display: inline-block;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 0.55rem 1.2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+}
+.sidebar-logo-bg:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+}
+.sidebar-logo-bg img {
+    height: 34px;
+    display: block;
+}
+
+/* ── Sidebar user card ──────────────────────────────────────── */
+.sidebar-user-card {
+    background: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.10);
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    animation: fadeInUp 0.4s ease both;
+    animation-delay: 0.2s;
+}
+.sidebar-user-card:hover {
+    background: rgba(255,255,255,0.11);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+.sidebar-user-card .user-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 0.18rem;
+}
+.sidebar-user-card .user-role {
+    font-size: 0.76rem;
+    color: rgba(255,255,255,0.50);
+}
+.sidebar-user-card .user-status {
+    margin-top: 0.38rem;
+    font-size: 0.76rem;
+    color: rgba(255,255,255,0.50);
+}
+.status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #34D399;
+    margin-right: 5px;
+    vertical-align: middle;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* ── Empty state ────────────────────────────────────────────── */
+.empty-state {
+    text-align: center;
+    padding: 5rem 2rem 2rem 2rem;
+    color: #8A93A8;
+    animation: fadeInUp 0.5s ease both;
+}
+.empty-state h3 {
+    color: #002c97;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    animation: float 4s ease-in-out infinite;
+    display: inline-block;
+}
+.empty-state p {
+    font-size: 0.88rem;
+    max-width: 380px;
+    margin: 0 auto;
+    line-height: 1.65;
+}
+
+/* ── Page header (admin) ────────────────────────────────────── */
+.page-header {
+    padding: 0.3rem 0 0.9rem 0;
+    animation: fadeInUp 0.35s ease both;
+}
+.page-header h1 {
+    color: #002c97 !important;
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+.page-header p {
+    color: #8A93A8;
+    font-size: 0.88rem;
+    margin-top: 0.2rem;
+}
+.gold-bar {
+    width: 44px;
+    height: 3px;
+    background: #D4A017;
+    border-radius: 2px;
+    margin-top: 0.6rem;
+    animation: goldShimmer 3s ease-in-out infinite;
+}
+
+/* ── Global micro-interactions ──────────────────────────────── */
+.stButton > button,
+.stFormSubmitButton > button {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.stButton > button:hover,
+.stFormSubmitButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(0,44,151,0.16) !important;
+}
+.stButton > button:active,
+.stFormSubmitButton > button:active {
+    transform: translateY(0) !important;
+    box-shadow: none !important;
+}
+.stFormSubmitButton > button {
+    color: #FFFFFF !important;
+}
+
+[data-testid="stTextInput"] input,
+[data-testid="stTextArea"] textarea {
+    border-radius: 8px !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+[data-testid="stTextInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus {
+    border-color: #D4A017 !important;
+    box-shadow: 0 0 0 3px rgba(212,160,23,0.13) !important;
+}
+
+/* ── Tabs ───────────────────────────────────────────────────── */
+.stTabs [data-baseweb="tab"] {
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.stTabs [data-baseweb="tab"]:hover {
+    transform: translateY(-1px);
+}
+.stTabs [data-baseweb="tab-highlight"] {
+    background: #D4A017 !important;
+}
+
+/* ── Nav label ──────────────────────────────────────────────── */
+.nav-label {
+    font-size: 0.67rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: rgba(255,255,255,0.30);
+    margin-bottom: 0.45rem;
+    font-weight: 600;
+    animation: fadeInLeft 0.4s ease both;
+    animation-delay: 0.1s;
+}
